@@ -5,6 +5,9 @@ from tqdm import tqdm
 import pickle
 
 
+if __name__ == '__main__':
+    freeze_support()
+    
 def train(
     model,
     config,
@@ -24,8 +27,10 @@ def train(
     )
 
     best_valid_loss = 1e10
+    print("utils>train>30: before epoch.")
     for epoch_no in range(config["epochs"]):
         avg_loss = 0
+        print("utils>train>33: before model.train().")
         model.train()
         with tqdm(train_loader, mininterval=5.0, maxinterval=50.0) as it:
             for batch_no, train_batch in enumerate(it, start=1):
@@ -70,8 +75,10 @@ def train(
                     epoch_no,
                 )
 
+    print("utils>train>: saving model...")
     if foldername != "":
         torch.save(model.state_dict(), output_path)
+    print("utils>train>: end.")
 
 
 def quantile_loss(target, forecast, q: float, eval_points) -> float:
