@@ -2,9 +2,9 @@
 #type: args
 
 train:
-  epochs: 2 #200
+  epochs: 1 #200
   batch_size: 16 
-  lr: 1.750e-3  #1.0e-3
+  lr: 1.50e-3  #1.0e-3
   itr_per_epoch: 1.0e+4  #1.0e+8
 
 
@@ -12,7 +12,7 @@ diffusion:
   layers: 4 
   channels: 64 
   nheads: 8
-  diffusion_embedding_dim: 128
+  diffusion_embedding_dim: 64 #128
   beta_start: 0.0001
   beta_end: 0.5
   num_steps: 50
@@ -21,6 +21,6 @@ diffusion:
 
 model:
   is_unconditional: 0
-  timeemb: 128
+  timeemb: 64 #128
   featureemb: 16
   target_strategy: "random"

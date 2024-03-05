@@ -26,7 +26,7 @@ class CSDI_base(nn.Module):
         config_diff["side_dim"] = self.emb_total_dim
 
         input_dim = 1 if self.is_unconditional == True else 2
-        self.diffmodel = diff_CSDI(config_diff, input_dim)
+        self.diffmodel = diff_CSDI(config_diff, input_dim) #------------------------------------------diffmodel = from diff_models import diff_CSDI
 
         # parameters for diffusion models
         self.num_steps = config_diff["num_steps"]
@@ -194,7 +194,7 @@ class CSDI_base(nn.Module):
             gt_mask,
             for_pattern_mask,
             _,
-        ) = self.process_data(batch)
+        ) = self.process_data(batch) #-----------------------------------------------------------------------------------self.process_data(batch)
         if is_train == 0:
             cond_mask = gt_mask
         elif self.target_strategy != "random":

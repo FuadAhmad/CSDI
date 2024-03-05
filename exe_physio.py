@@ -41,7 +41,7 @@ os.makedirs(foldername, exist_ok=True)
 with open(foldername + "config.json", "w") as f:
     json.dump(config, f, indent=4)
 
-train_loader, valid_loader, test_loader = get_dataloader(
+train_loader, valid_loader, test_loader = get_dataloader(  #--------------------------------------from dataset_physio import get_dataloader
     seed=args.seed,
     nfold=args.nfold,
     batch_size=config["train"]["batch_size"],
@@ -50,7 +50,7 @@ train_loader, valid_loader, test_loader = get_dataloader(
 
 model = CSDI_Physio(config, args.device).to(args.device)
 
-if args.modelfolder == "":
+if args.modelfolder == "":  #-------------------------------------------from utils import train, evaluate
     train(
         model,
         config["train"],
@@ -62,5 +62,5 @@ else:
     model.load_state_dict(torch.load("./save/" + args.modelfolder + "/model.pth"))
 
 print("exe_physio: start>> evaluate()")
-evaluate(model, test_loader, nsample=args.nsample, scaler=1, foldername=foldername)
+#evaluate(model, test_loader, nsample=args.nsample, scaler=1, foldername=foldername)
 print("exe_physio: end.")

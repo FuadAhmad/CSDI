@@ -19,7 +19,7 @@ def extract_hour(x):
 
 
 def parse_data(x):
-    # extract the last value for each attribute
+    # extract the last value for each attribute; original X contains 3 columns: Time, Parameter, Value
     x = x.set_index("Parameter").to_dict()["Value"]
 
     values = []
@@ -70,7 +70,7 @@ def get_idlist():
     return patient_id
 
 
-class Physio_Dataset(Dataset):
+class Physio_Dataset(Dataset): #---------------------------------------------------------from torch.utils.data import DataLoader, Dataset
     def __init__(self, eval_length=48, use_index_list=None, missing_ratio=0.0, seed=0):
         self.eval_length = eval_length
         np.random.seed(seed)  # seed for ground truth choice
@@ -162,16 +162,13 @@ def get_dataloader(seed=1, nfold=None, batch_size=16, missing_ratio=0.1):
     train_index = remain_index[:num_train]
     valid_index = remain_index[num_train:]
 
-    dataset = Physio_Dataset(
-        use_index_list=train_index, missing_ratio=missing_ratio, seed=seed
-    )
-    train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=1)
-    valid_dataset = Physio_Dataset(
-        use_index_list=valid_index, missing_ratio=missing_ratio, seed=seed
-    )
+    dataset = Physio_Dataset( use_index_list=train_index, missing_ratio=missing_ratio, seed=seed)
+    train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=1) #--------------------------from torch.utils.data import DataLoader, Dataset
+    
+    valid_dataset = Physio_Dataset( use_index_list=valid_index, missing_ratio=missing_ratio, seed=seed)
     valid_loader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=0)
-    test_dataset = Physio_Dataset(
-        use_index_list=test_index, missing_ratio=missing_ratio, seed=seed
-    )
+    
+    test_dataset = Physio_Dataset( use_index_list=test_index, missing_ratio=missing_ratio, seed=seed)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=0)
+    
     return train_loader, valid_loader, test_loader
