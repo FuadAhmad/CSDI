@@ -12,7 +12,7 @@ diffusion:
   layers: 4 
   channels: 64 
   nheads: 8
-  diffusion_embedding_dim: 64 #128
+  diffusion_embedding_dim: 128
   beta_start: 0.0001
   beta_end: 0.5
   num_steps: 50
@@ -21,6 +21,6 @@ diffusion:
 
 model:
   is_unconditional: 0
-  timeemb: 64 #128
+  timeemb: 128
   featureemb: 16
   target_strategy: "random"
